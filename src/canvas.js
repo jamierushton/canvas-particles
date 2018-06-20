@@ -9,7 +9,10 @@ const mouse = {
     y: undefined
 };
 
-const MAX_RADIUS = 40, MAX_PARTICLES = 400, VELOCITY = 4;
+const MAX_RADIUS = 40,
+      MAX_PARTICLES = 400,
+      VELOCITY = 4,
+      DISTANCE_FROM_MOUSE = 50;
 
 const _colours = [
     '#0057AC',
@@ -47,6 +50,7 @@ class Particle {
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         c.fillStyle = this.colour;
         c.fill();
+        c.closePath();
     };
 
     grow() {
@@ -68,14 +72,15 @@ class Particle {
         if (this.y + this.radius > innerHeight || this.y - this.radius < 0) {
             this.dy = -this.dy;
         }
-        
-        if ((mouse.x - this.x < 50 && mouse.x - this.x > -50) && (mouse.y - this.y < 50 && mouse.y - this.y > -50)) {
+
+        if ((mouse.x - this.x < DISTANCE_FROM_MOUSE && mouse.x - this.x > -DISTANCE_FROM_MOUSE)
+            && (mouse.y - this.y < DISTANCE_FROM_MOUSE && mouse.y - this.y > -DISTANCE_FROM_MOUSE)) {
             this.grow();
         }
         else if (this.radius > this.minRadius) {
             this.shrink();
         }
-        
+
         this.x += this.dx;
         this.y += this.dy;
     };
@@ -87,7 +92,7 @@ function init() {
     _particles = [];
 
     for (let i = 0; i < MAX_PARTICLES; i++) {
-        const radius = Math.random() * 3 + 1, 
+        const radius = Math.random() * 3 + 1,
               velocity = 4;
 
         let x = Math.random() * (innerWidth - radius * 2) + radius,
