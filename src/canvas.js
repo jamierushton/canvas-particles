@@ -11,7 +11,6 @@ const mouse = {
 
 const MAX_RADIUS = 40,
       MAX_PARTICLES = 400,
-      VELOCITY = 4,
       DISTANCE_FROM_MOUSE = 50;
 
 const _colours = [
